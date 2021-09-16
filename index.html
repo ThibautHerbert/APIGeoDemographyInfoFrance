@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/png" href="./image/logo.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="./style/style.css">
     <title>Info France Administration</title>
 </head>
 <body>
@@ -15,17 +15,24 @@
             Accueil
         </nav>
     </header>
-    <h1>Info France Administration</h1>
-    <h2>Bienvenue sur le site des informations concernant l'Administration française</h2>
-    <h3>Retrouvez rapidement les codes postaux ou les villes</h3>
+    <h1 class="bg-primary text-white">Info France Administration</h1>
+    <h2 class="bg-danger text-white">Bienvenue sur le site des informations concernant l'Administration française</h2>
+    <h3>Retrouvez rapidement des codes postaux ou des villes !</h3>
     <div>
-        <div>
+        <div class="m-2">
             <p>Vous avez un code postal, vous cherchez la ville correspondante :</p>
-            <input type="text" class="">
+            <div class="d-flex justify-content-center">
+                <input type="text" maxlength="5" class="mx-1">
+                <button class="btn btn-search btn-info">recherche</button>
+            </div>
+           
         </div>
-        <div>
+        <div class="m-2">
             <p>Vous avez un nom de ville, vous cherchez le code postal correspondant :</p>
-            <input type="text" class="">
+            <div class="d-flex justify-content-center">
+                <input type="text" class="mx-1">
+                <button class="btn btn-search btn-info">recherche</button>
+            </div>
         </div>
     </div>
 </body>
