@@ -1,7 +1,17 @@
+h1{
+    font-size: 1.9em;
+    line-height: 55px;
+}
 h2{
     font-size: x-large;
     text-align: center;
 }
 h3{
     font-size: larger;
+}
+footer div a {
+    color: white;
+}
+footer div a:hover {
+    color: brown;
 }
