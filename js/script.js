@@ -1,27 +1,49 @@
-let searchZipCode = document.querySelector('.search-zipCode');
+let searchByZipCode = document.querySelector('.search-zipCode');
+let searchByCity = document.querySelector('.search-by-city');
+let searchByCityBtn = document.querySelector('.search-by-city-btn');
 let resultZipCode = document.querySelector('.result-ZipCode');
+let resultCity = document.querySelector('.result-city');
 let showSearchZipCode = document.querySelector('.show-search-zipCode');
+let showSearchByCity = document.querySelector('.show-search-by-city');
+let test = document.querySelector('.test');
+
+console.log('tes' +searchByCity)
+console.log('gggg' + searchByCity.value)
 
 let urlZipCode = 'https://geo.api.gouv.fr/communes?codePostal=';
+let urlByCity = `https://geo.api.gouv.fr/communes?nom=${searchByCity}&fields=departement&boost=population&limit=5`;
 let zipCodeData ;
 
 const fetchZipCode = async() => {
     try {
-        return await fetch(`${urlZipCode + searchZipCode.value}`)
-            .then(response => response.json()
-            .then(data => zipCodeData = data))
+        return await fetch(`${urlZipCode + searchByZipCode.value}`)
+            .then(response => response.json())
+            //.then(data => zipCodeData = data))
+            .catch(err => err)
+    } catch (error) {
+        console.log('erreur : ' + error);
+    }  
+};
+const fetchByCity = async() => {
+    try {
+        return await fetch(`https://geo.api.gouv.fr/communes?nom=${searchByCity.value}&fields=departement&boost=population&limit=5`)
+            .then(response => response.json())
+            //.then(data => console.log(data))
             .catch(err => err)
     } catch (error) {
         console.log('erreur : ' + error);
     }  
 };
 
-searchZipCode.addEventListener('input', () => {
-    if( searchZipCode.value.length == 5) {
-        showSearchZipCode.innerHTML += 'Résultat de votre recherche pour ' + searchZipCode.value + ' :'; 
+
+searchByZipCode.addEventListener('input', () => {
+    resultZipCode.innerHTML = ''; // arrange le code si plusieurs recherches à la suite pour le inserAdjacentHTML
+
+    if( searchByZipCode.value.length == 5) {
+        showSearchZipCode.innerHTML = 'Résultat de votre recherche pour ' + searchByZipCode.value + ' :'; 
         const showCity = async() => {
             let zipCode = await fetchZipCode();
-            //console.log('zip code' + zipCode.value);
+            console.log('zip code' + zipCode.value);
             let result = `<ul>`
             for (let city of zipCode) {
                 result += `<li>${city.nom}</li>`
@@ -31,7 +53,52 @@ searchZipCode.addEventListener('input', () => {
             resultZipCode.insertAdjacentHTML("beforeend", result);
         }
         showCity();
-        
+    }
+})
+
+searchByCity.addEventListener('input', () => {
+    //console.log('data');
+    resultCity.innerHTML = ''; // permet de supprimer recherches précédentes
+    if( searchByCity.value.length >2) {
+        // console.log('data2' + searchByCity.value); // ça marche
+        showSearchByCity.innerHTML = 'Résultat de votre recherche pour ' + searchByCity.value + ' :';  // ça marche
+        const showZipCode = async() => {
+            let zipCode2 = await fetchByCity();
+            let result = `<ul>`
+            for (let city of zipCode2) { 
+                console.log('zip cdedededeode'); 
+                result += `<li>${city.nom}</li>`
+            };
+            result += `</ul>`;
+            //resultZipCode.innerHTML = result;
+            resultCity.insertAdjacentHTML("beforeend", result);
+        }
+        showZipCode();
     }
     
-})
+});
+
+// test recherche au clic du btn recherche,
+searchByCityBtn.addEventListener('click', () => {
+    // attention api ne donne ni le cp, ni la population !
+    console.log('data');
+    resultCity.innerHTML = ''; // à un nouveau clic fait s'effacer le résultat précédent
+    let result = ''; // pas d'effet pour retirer recherche précédente
+    if( searchByCity.value.length > 2) {
+        // console.log('data2' + searchByCity.value); // ça marche
+        showSearchByCity.innerHTML = 'Résultat de votre recherche pour ' + searchByCity.value + ' :';  // ça marche
+        const showZipCode = async() => {
+            let zipCode2 = await fetchByCity();
+            result = `<ul>`
+            for (let city of zipCode2) { 
+                console.log('zip cdedededeode'); 
+                result += `<li>${city.nom}</li>`
+            };
+            result += `</ul>`;
+            //resultZipCode.innerHTML = result;
+            resultCity.insertAdjacentHTML("beforeend", result);
+        }
+        showZipCode();
+    }
+    
+});
