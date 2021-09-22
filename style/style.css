@@ -1,13 +1,49 @@
+@font-face{
+    font-family: 'Montserrat';
+    src: url('../Fonts/Montserrat/Montserrat-Light.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face{
+    font-family: 'Quicksand';
+    src: url('../Fonts/Quicksand/static/Quicksand-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face{
+    font-family: 'Quicksand-SemiBold';
+    src: url('../Fonts/Quicksand/static/Quicksand-SemiBold.ttf') format('truetype');
+}
+body{
+    font-family: 'Montserrat', 'Quicksand', sans-serif;
+}
+
 h1{
-    font-size: 1.9em;
+    font-size: 1.7em;
     line-height: 55px;
 }
 h2{
     font-size: x-large;
     text-align: center;
+    font-family: 'Quicksand', 'Montserrat', sans-serif;
 }
 h3{
     font-size: larger;
+    font-family: 'Quicksand', 'Montserrat', sans-serif;
+
+}
+.search-text{
+    font-family: 'Quicksand', 'Montserrat', sans-serif;
+}
+.item-result{
+    border: rgb(42, 42, 112) solid 3px;
+    margin: 25px;
+    margin-left: 0;
+    padding: 5px;
+    background: rgb(42, 42, 112);
+    color: white;
+    border-left: solid red 4px;
+    font-family: 'Montserrat', sans-serif;
 }
 footer div a {
     color: white;

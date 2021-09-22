@@ -1,3 +1,7 @@
+// changer api pour city
+// changer police
+// améliorer design des résultats ? + nav header
+
 let searchByZipCode = document.querySelector('.search-zipCode');
 let searchByCity = document.querySelector('.search-by-city');
 let searchByCityBtn = document.querySelector('.search-by-city-btn');
@@ -12,11 +16,12 @@ console.log('gggg' + searchByCity.value)
 
 let urlZipCode = 'https://geo.api.gouv.fr/communes?codePostal=';
 let urlByCity = `https://geo.api.gouv.fr/communes?nom=${searchByCity}&fields=departement&boost=population&limit=5`;
+let urlByCityWithZipAndPop = `https://geo.api.gouv.fr/communes?nom=${searchByCity}&fields=code,nom,codesPostaux,departement,population`;
 let zipCodeData ;
 
 const fetchZipCode = async() => {
     try {
-        return await fetch(`${urlZipCode + searchByZipCode.value}`)
+        return await fetch(`${urlZipCode + searchByZipCode.value + `&fields=code,nom,codesPostaux,departement,population`}`)
             .then(response => response.json())
             //.then(data => zipCodeData = data))
             .catch(err => err)
@@ -26,7 +31,8 @@ const fetchZipCode = async() => {
 };
 const fetchByCity = async() => {
     try {
-        return await fetch(`https://geo.api.gouv.fr/communes?nom=${searchByCity.value}&fields=departement&boost=population&limit=5`)
+        //return await fetch(`https://geo.api.gouv.fr/communes?nom=${searchByCity.value}&fields=departement&boost=population&limit=5`)
+        return await fetch(`https://geo.api.gouv.fr/communes?nom=${searchByCity.value}&fields=code,nom,codesPostaux,departement,population`)
             .then(response => response.json())
             //.then(data => console.log(data))
             .catch(err => err)
@@ -46,7 +52,12 @@ searchByZipCode.addEventListener('input', () => {
             console.log('zip code' + zipCode.value);
             let result = `<ul>`
             for (let city of zipCode) {
-                result += `<li>${city.nom}</li>`
+                result += `<div class="item-result">
+                    <p class="text-uppercase text-center">${city.nom}</p>
+                    <p>Codes Postaux : ${city.codesPostaux}</p>
+                    <p>Département : ${city.departement.nom}</p>
+                    <p>Population : ${city.population} habitants</p>
+                </div>`
             };
             result += `</ul>`;
             //resultZipCode.innerHTML = result;
@@ -65,9 +76,16 @@ searchByCity.addEventListener('input', () => {
         const showZipCode = async() => {
             let zipCode2 = await fetchByCity();
             let result = `<ul>`
-            for (let city of zipCode2) { 
-                console.log('zip cdedededeode'); 
-                result += `<li>${city.nom}</li>`
+            for (let city of zipCode2) {  
+                result += `
+                <div class="d-flex flex-column justify-content-center align-item-center item-result">
+                    <p class="text-uppercase text-center">${city.nom}</p>
+                    <p>Département : ${city.departement.nom}</p>
+                    <p>Codes postaux : ${city.codesPostaux}</p>
+                    <p>Code Insee : ${city.code}</p>
+                    <p>Population : ${city.population} habitants</p>         
+                </div>        
+                `
             };
             result += `</ul>`;
             //resultZipCode.innerHTML = result;
@@ -91,7 +109,6 @@ searchByCityBtn.addEventListener('click', () => {
             let zipCode2 = await fetchByCity();
             result = `<ul>`
             for (let city of zipCode2) { 
-                console.log('zip cdedededeode'); 
                 result += `<li>${city.nom}</li>`
             };
             result += `</ul>`;
